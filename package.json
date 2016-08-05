@@ -1,0 +1,20 @@
+{
+  "name": "try-react",
+  "version": "0.0.0",
+  "description": "My first react app",
+  "scripts": {
+    "dev": "webpack-dev-server --colors --port 4000"
+  },
+  "dependencies": {
+    "object-assign": "*",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "webpack-dev-server": "*",
+    "webpack": "*"
+  }
+}
