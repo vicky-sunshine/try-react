@@ -5,7 +5,10 @@ const TodoInput = React.createClass({
     this.setState({description: evt.target.value})
   },
   addTodo(){
-    console.log(this.state)
+    // console.log(this.state.description)
+    // console.log(this.props.addTodo)
+    
+    this.props.addTodo({description:this.state.description, done: false})
   },
   render() {
       return <div>

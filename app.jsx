@@ -4,17 +4,17 @@ import TodoInput from './todo_input.jsx'
 
 var todos = [
     {
-      id: "1",
+      id: 1,
       description: "buy the milk",
       done: false
     },
     {
-      id: "2",
+      id: 2,
       description: "save New york",
       done: false
     },
     {
-      id: "3",
+      id: 3,
       description: "learn react",
       done: false
     }
@@ -26,11 +26,17 @@ const App = React.createClass({
   getInitialState(){
     return {todos: todos}
   },
+  addTodo(todo){
+    const todos = this.state.todos
+    var nextId = this.state.todos.length + 1
+    todo["id"]=nextId
+    this.setState({todos: this.state.todos.concat(todo)})
+  },
   render() {
     return <div>
       <TodoHeader />
       <TodoList todos={this.state.todos} />
-      <TodoInput />
+      <TodoInput addTodo={this.addTodo}/>
     </div>;
   }
 })
