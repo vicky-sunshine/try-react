@@ -20,7 +20,7 @@ var todos = [
     }
 ]
 
-const todoHeader = () =>  <h1>My React Todo</h1>;
+const TodoHeader = () =>  <h1>My React Todo</h1>;
 
 const App = React.createClass({
   getInitialState(){
@@ -28,7 +28,7 @@ const App = React.createClass({
   },
   render() {
     return <div>
-      <todoHeader />
+      <TodoHeader />
       <TodoList todos={this.state.todos} />
       <TodoInput />
     </div>;

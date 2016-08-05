@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TodoItem = (props)=>{
-    return <h4> { props.todo.description} </h4>
+    return <li> { props.todo.description} </li>
 }
 
 const TodoList = React.createClass({
