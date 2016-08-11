@@ -1,19 +1,26 @@
 import React from 'react';
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import TodoConstants from '../constants/TodoConstants'
+
 
 const TodoInput = React.createClass({
-  handleChange(evt){
+  getInitialState() {
+    return {description: ''}
+  },
+  handleChange(evt) {
     this.setState({description: evt.target.value})
   },
-  addTodo(){
-    // console.log(this.state.description)
-    // console.log(this.props.addTodo)
-    
-    this.props.addTodo({description:this.state.description, done: false})
+  addTodo() {
+    AppDispatcher.dispatch({
+      type: TodoConstants.ADD_TODO,
+      text: this.state.description
+    })
+    this.setState({text: ''})
   },
   render() {
       return <div>
         <label htmlFor="input_todo" type="text">
-          New Todo
+          New Todo: 
         </label>
         <input onChange={this.handleChange}></input>
         <button onClick={this.addTodo}> Add </button>
