@@ -6,10 +6,12 @@
     "dev": "webpack-dev-server --colors --port 4000"
   },
   "dependencies": {
+    "lodash": "*",
     "object-assign": "*",
     "react": "*",
     "react-dom": "*",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "flux": "*"
   },
   "devDependencies": {
     "babel-loader": "*",
