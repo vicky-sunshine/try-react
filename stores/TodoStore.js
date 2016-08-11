@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var TodoConstants = require('../constants/TodoConstants');
 var EventEmitter = require('events').EventEmitter; 
 var assign = require('object-assign');
+var { v4 } = require('node-uuid');
 
 var CHANGE_EVENT = 'change';
 
@@ -26,13 +27,19 @@ var _todos = {
 
 
 
-function addTodo(todo) {
-  _todos[todo.id] = todo;
+function create(text) {
+  var id = v4();
+  _todos[id] = {
+    id: id,
+    description: text,
+    done: false
+  }
 }
 
 // 1: {id: 1, {done: true}}
-function updateTodo(id, data) {
-  _todos = assign({}, _todos[id], data)
+function update(id, text) {
+  var id = v4();
+  _todos[id].description = text;
 }
 
 // Emmiter/ listener
@@ -40,24 +47,41 @@ function updateTodo(id, data) {
 
 var TodoStore = assign ({}, EventEmitter.prototype, {
   
-  getAllTodos: (){
+  getAllTodos() {
     return _todos;
-  }
+  },
   
   // Following are about subscribing messages about this `Store`
   // tell `Component` the state has been change
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT)
   },
   // `Component` use this to subscribe the message
-  addChangeListender: function(callback) {
+  addChangeListender(callback) {
     this.on(CHANGE_EVENT, callback);
   },
   // `Component` use this to cancel subscribing the message
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
   
 });
+
+// Dispatcher
+AppDispatcher.register(function(action){
+  switch (action.type) {
+    case TodoConstants.ADD_TODO:
+      create(action.text);
+      TodoStore.emitChange();
+      break;
+    case TodoConstants.UPDATE_TODO:
+      update(action.text);
+      TodoStore.emitChange();
+      break;  
+    default:
+      console.log('Unknown action' + action.type);
+      break;
+  }
+})
 
 module.exports = TodoStore;
