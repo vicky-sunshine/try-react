@@ -18,12 +18,7 @@ const TodoInput = React.createClass({
     // })
     AppDispatcher.dispatch({type: TodoConstants.LOADING})
     addTodo(this.state.description).then(todos => {
-      fetchTodos('all').then(todos => {
-        AppDispatcher.dispatch({
-          type: TodoConstants.FETCH_TODOS,
-          'todos': todos
-        })
-      })
+      AppDispatcher.dispatch({type: TodoConstants.RELOAD})
     })
     this.setState({description: ''})
   },

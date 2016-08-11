@@ -4,6 +4,7 @@ var TodoConstants = {
   TOGGLE_TODO: 'toggle',
   LOADDING: 'loading',  
   FETCH_TODOS: 'fetch',
+  RELOAD: 'reload'
 }
 
 module.exports = TodoConstants;

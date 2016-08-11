@@ -76,7 +76,7 @@ AppDispatcher.register(function(action){
       TodoStore.emitChange();
       break;
     case TodoConstants.ADD_TODO:
-      addTodo(action.text);
+      // addTodo(action.text);
       TodoStore.emitChange();
       break;
     case TodoConstants.UPDATE_TODO:
@@ -85,6 +85,9 @@ AppDispatcher.register(function(action){
       break;  
     case TodoConstants.LOADING:
       console.log('loading');
+      break;
+    case TodoConstants.RELOAD:
+      TodoStore.emitChange();
       break;
     default:
       console.log('Unknown action' + action.type);
