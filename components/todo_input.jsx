@@ -1,21 +1,31 @@
 import React from 'react';
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import TodoConstants from '../constants/TodoConstants'
+var { fetchTodos, addTodo } = require('../api')
 
 
 const TodoInput = React.createClass({
   getInitialState() {
-    return {description: ''}
+    return {text: ''}
   },
   handleChange(evt) {
     this.setState({description: evt.target.value})
   },
   addTodo() {
-    AppDispatcher.dispatch({
-      type: TodoConstants.ADD_TODO,
-      text: this.state.description
+    // AppDispatcher.dispatch({
+    //   type: TodoConstants.ADD_TODO,
+    //   text: this.state.text
+    // })
+    AppDispatcher.dispatch({type: TodoConstants.LOADING})
+    addTodo(this.state.description).then(todos => {
+      fetchTodos('all').then(todos => {
+        AppDispatcher.dispatch({
+          type: TodoConstants.FETCH_TODOS,
+          'todos': todos
+        })
+      })
     })
-    this.setState({text: ''})
+    this.setState({description: ''})
   },
   render() {
       return <div>

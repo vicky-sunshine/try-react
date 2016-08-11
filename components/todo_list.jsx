@@ -3,12 +3,12 @@ import _ from 'lodash';
 
 
 const TodoItem = (props)=>{
-    return <li> { props.todo.description} </li>
+    return <li> { props.todo.text} </li>
 }
 
 const TodoList = React.createClass({
   todos(){
-    return _.map(this.props.todos,(todo => {
+    return _.map(_.values(this.props.todos),(todo => {
         return <TodoItem todo={todo} key={"todo" + todo.id}/>
     }))
   },

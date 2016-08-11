@@ -2,6 +2,9 @@ import React from 'react';
 import TodoList from './todo_list.jsx'
 import TodoInput from './todo_input.jsx'
 import TodoStore from '../stores/TodoStore'
+import TodoConstants from '../constants/TodoConstants'
+import AppDispatcher from '../dispatcher/AppDispatcher'
+var { fetchTodos, addTodo } = require('../api')
 
 const TodoHeader = () =>  <h1>My React Todo</h1>;
 
@@ -21,6 +24,13 @@ const App = React.createClass({
     
     // when receiving msg, call _onChange() function
     TodoStore.addChangeListender(this._onChange)
+    AppDispatcher.dispatch({type: TodoConstants.LOADING})
+    fetchTodos('all').then(todos => {
+      AppDispatcher.dispatch({
+        type: TodoConstants.FETCH_TODOS,
+        'todos': todos
+      })
+    })
   },
   componentWillUnmount() {
     TodoStore.removeChangeListener(this._onChange);
