@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+
 
 const TodoItem = (props)=>{
     return <li> { props.todo.description} </li>
@@ -6,9 +8,9 @@ const TodoItem = (props)=>{
 
 const TodoList = React.createClass({
   todos(){
-    return this.props.todos.map(todo => {
+    return _.map(this.props.todos,(todo => {
         return <TodoItem todo={todo} key={"todo" + todo.id}/>
-    })
+    }))
   },
   
   render() {
@@ -18,7 +20,5 @@ const TodoList = React.createClass({
     </div>
   }
 })
-
-
 
 module.exports = TodoList

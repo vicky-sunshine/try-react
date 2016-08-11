@@ -1,42 +1,35 @@
 import React from 'react';
 import TodoList from './todo_list.jsx'
 import TodoInput from './todo_input.jsx'
-
-var todos = [
-    {
-      id: 1,
-      description: "buy the milk",
-      done: false
-    },
-    {
-      id: 2,
-      description: "save New york",
-      done: false
-    },
-    {
-      id: 3,
-      description: "learn react",
-      done: false
-    }
-]
+import TodoStore from '../stores/TodoStore'
 
 const TodoHeader = () =>  <h1>My React Todo</h1>;
 
 const App = React.createClass({
-  getInitialState(){
-    return {todos: todos}
+  _onChange(){
+    // update state of the components
+    this.setState({
+      todos: TodoStore.getAllTodos()
+    })
   },
-  addTodo(todo){
-    const todos = this.state.todos
-    var nextId = this.state.todos.length + 1
-    todo["id"]=nextId
-    this.setState({todos: this.state.todos.concat(todo)})
+  getInitialState(){
+    return { todos: TodoStore.getAllTodos() }
+  },
+  componentDidMount(){
+    // after this components mount in HTML
+    // it will subscribe the state-changed message from `Store`
+    
+    // when receiving msg, call _onChange() function
+    TodoStore.addChangeListender(this._onChange)
+  },
+  componentWillUnmount() {
+    TodoStore.removeChangeListener(this._onChange);
   },
   render() {
     return <div>
       <TodoHeader />
       <TodoList todos={this.state.todos} />
-      <TodoInput addTodo={this.addTodo}/>
+      <TodoInput />
     </div>;
   }
 })
